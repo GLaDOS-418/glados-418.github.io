@@ -1,1 +1,10 @@
 theme: jekyll-theme-minimal
+plugins:
+  - jekyll-redirect-from
+
+---
+redirect_from:
+  - /dot_setup.sh
+redirect_to:
+  - https://raw.githubusercontent.com/arnobbhanja/dotfiles/master/dot_setup.sh
+---
