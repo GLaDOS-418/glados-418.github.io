@@ -1,8 +1,1 @@
-theme: jekyll-theme-minimal
-plugins:
-  - jekyll-redirect-from
-
----
-  redirect_from: /dot
-  redirect_to: https://raw.githubusercontent.com/arnobbhanja/dotfiles/master/dot_setup.sh
----
+theme: jekyll-theme-cayman
