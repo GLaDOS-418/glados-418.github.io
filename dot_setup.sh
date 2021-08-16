@@ -48,15 +48,15 @@ read -sp "enter github pass: " pass
 curl -u "${user}:${pass}" --data "{ \"key\": \"$(cat ~/.ssh/id_rsa.pub)\"}" https://api.github.com/user/keys
 
 ssh-keyscan github.com >> ~/.ssh/known_hosts
-git clone git@github.com:arnobbhanja/dotfiles.git temp_dotfiles
+git clone git@github.com:glados-418/dotfiles.git temp_dotfiles
 
 source temp_dotfiles/.bashrc
 
 cd $HOME
 rm -rf temp_dotfiles
 
-git clone git@github.com:arnobbhanja/dotfiles.git
-git clone git@github.com:arnobbhanja/vim.git
+git clone git@github.com:glados-418/dotfiles.git
+git clone git@github.com:glados-418/vim.git
 
 cd dotfiles
 
