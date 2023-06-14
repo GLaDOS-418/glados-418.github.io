@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on smirking teapot</title>
+    <link>https://glados-418.github.io/posts/</link>
+    <description>Recent content in Posts on smirking teapot</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 12 Jun 2023 15:18:54 +0530</lastBuildDate><atom:link href="https://glados-418.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Negative Integer Literals</title>
+      <link>https://glados-418.github.io/posts/negative-integer-literals/</link>
+      <pubDate>Mon, 12 Jun 2023 15:18:54 +0530</pubDate>
+      
+      <guid>https://glados-418.github.io/posts/negative-integer-literals/</guid>
+      <description>negative numbers are represented as two&amp;rsquo;s complement and, implicit type conversion of a 32-bit integer to 64-bit integer preserves the value.</description>
+    </item>
+    
+  </channel>
+</rss>
