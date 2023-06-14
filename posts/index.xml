@@ -6,14 +6,15 @@
     <description>Recent content in Posts on smirking teapot</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Jun 2023 15:18:54 +0530</lastBuildDate><atom:link href="https://glados-418.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 14 Jun 2023 17:18:54 +0530</lastBuildDate><atom:link href="https://glados-418.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Negative Integer Literals</title>
       <link>https://glados-418.github.io/posts/negative-integer-literals/</link>
-      <pubDate>Mon, 12 Jun 2023 15:18:54 +0530</pubDate>
+      <pubDate>Wed, 14 Jun 2023 17:18:54 +0530</pubDate>
       
       <guid>https://glados-418.github.io/posts/negative-integer-literals/</guid>
-      <description>negative numbers are represented as two&amp;rsquo;s complement and, implicit type conversion of a 32-bit integer to 64-bit integer preserves the value.</description>
+      <description>TL;DR: Write your negative numbers in base-10 and wrap them in parentheses.
+ negative numbers are represented in two&amp;rsquo;s complement form and, implicit type conversion of a 32-bit integer to 64-bit integer preserves the value.</description>
     </item>
     
   </channel>
