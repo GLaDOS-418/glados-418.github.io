@@ -1,0 +1,32 @@
+/* Light Mode Styles */
+:root {
+  --background-color: #f5f5f5;
+  --text-color: #333;
+  --accent-color: #007bff;
+}
+
+/* Dark Mode Styles */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #333;
+    --text-color: #f5f5f5;
+    --accent-color: #6c757d;
+  }
+}
+
+/* Giscus Theme */
+.giscus {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.giscus .comment {
+  border-color: var(--accent-color);
+}
+
+.giscus .comment .user {
+  color: var(--accent-color);
+}
+
+/* Add more custom styles as needed */
+

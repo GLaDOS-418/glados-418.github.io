@@ -68,7 +68,7 @@
 <p>With the above knowledge, you&rsquo;d expect that the functions <code>f</code> and <code>g</code> below would return the same value, <code>-1</code>.</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#dc322f">long</span> <span style="color:#268bd2">f</span><span style="color:#719e07">()</span> <span style="color:#719e07">{</span> <span style="color:#719e07">return</span> <span style="color:#719e07">-</span>1<span style="color:#719e07">;</span> <span style="color:#719e07">}</span>
 <span style="color:#dc322f">long</span> <span style="color:#268bd2">g</span><span style="color:#719e07">()</span> <span style="color:#719e07">{</span> <span style="color:#719e07">return</span> 0xffffffff<span style="color:#719e07">;</span> <span style="color:#719e07">}</span>
-</code></pre></div><p>And you&rsquo;d be correct&hellip; if you&rsquo;re writing your code in <em>Java</em>. In most other popular languages ( like C++, Python, JavaScript, Rust, Go, Haskell, Swift &amp; Kotlin ), you&rsquo;d get the following output:</p>
+</code></pre></div><p>And you&rsquo;d be correct&hellip; if you&rsquo;re writing your code in <em>Java</em>. In most other popular languages ( like C++, Python, JavaScript, Rust, Go, Haskell, Swift, Kotlin &amp; C# ), you&rsquo;d get the following output:</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">f() : -1
 g() : 4294967295
 </code></pre></div><p>This was surprising for me. And until I read the references, I thought this was a bug. In my defense though, I checked on compiler explorer and found that C++ compilers behaved inconsistently under different circumstances. For example:</p>
@@ -98,7 +98,7 @@ g() : 4294967295
 </span></code></pre></div><p>In Rust:</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Rust" data-lang="Rust">println!( <span style="color:#2aa198">&#34;{}&#34;</span>, <span style="color:#719e07">-</span><span style="color:#2aa198">9</span><span style="color:#719e07">i32</span>.abs( ) );   <span style="color:#586e75">// prints -9
 </span><span style="color:#586e75"></span>println!( <span style="color:#2aa198">&#34;{}&#34;</span>, (<span style="color:#719e07">-</span><span style="color:#2aa198">9</span><span style="color:#719e07">i32</span>).abs( ) ); <span style="color:#586e75">// prints  9
-</span></code></pre></div><p>Then there&rsquo;s <em><strong>operator overloading</strong></em> in <code>C++</code>. But, luckily, overloaded <code>operator-</code> must have at least one parameter of class or enum type so, I can&rsquo;t overload it here for unary integer literals. <em>phew!</em></p>
+</span></code></pre></div><p>Then there&rsquo;s <em><strong>operator overloading</strong></em> in <code>C++</code>. But, luckily, overloaded &lsquo;<code>operator-</code>&rsquo; must have at least one parameter of class or enum type so, I can&rsquo;t overload it here for unary integer literals. <em>phew!</em></p>
 <p>I&rsquo;ve added all the test codes in <a href="https://github.com/GLaDOS-418/negative_integer_literal">this github repo</a>. To add other languages, please create a pull request.</p>
 <h4 id="references">References</h4>
 <ul>
@@ -132,7 +132,12 @@ g() : 4294967295
   
 
 
-<div id = "giscus">
+
+  
+  
+  
+
+<div class="giscus">
   <script src                    = "https://giscus.app/client.js"
           data-repo              = "GLaDOS-418/glados-418.github.io"
           data-repo-id           = "MDEwOlJlcG9zaXRvcnkxNzEwNzY4ODA="
@@ -143,15 +148,14 @@ g() : 4294967295
           data-reactions-enabled = ""
           data-emit-metadata     = "0"
           data-input-position    = "top"
-          data-theme             = "dark"
+          data-theme             = "https://glados-418.github.io//css/giscus.css"
           data-lang              = "en"
           data-loading           = "lazy"
           crossorigin            = "anonymous"
           async>
   </script>
 
-  <noscript>please enable javascript to view the <a href="https://giscus.app?ref_noscript">comments powered by
-      giscus.</a></noscript>
+  <noscript>please enable javascript to view the comments powered by <a href="https://giscus.app?ref_noscript">giscus</a></noscript>
 
 </div>
 
