@@ -69,5 +69,10 @@ table th, table td {
 }
 
 pre code {
-  display: inline-block
+  display: inline-block;
+}
+
+p code {
+  display: inline;
+  background: #3A3A3A;
 }
