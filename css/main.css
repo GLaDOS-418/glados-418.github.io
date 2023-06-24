@@ -1,5 +1,5 @@
 body {
-    font-family: "ubuntu", sans-serif;
+    font-family: "IBM Plex Mono", sans-serif;
     font-weight: 400;
     color: #333;
     line-height: 1.6;
@@ -195,7 +195,7 @@ pre code {
   display: inline-block;
 }
   
-p code {
+code {
   display: inline;
   background: #e4e4e4;
 }
