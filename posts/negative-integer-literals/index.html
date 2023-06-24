@@ -68,21 +68,21 @@
 <p>With the above knowledge, you&rsquo;d expect that the functions <code>f</code> and <code>g</code> below would return the same value, <code>-1</code>.</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Java" data-lang="Java"><span style="color:#dc322f">long</span> <span style="color:#268bd2">f</span><span style="color:#719e07">()</span> <span style="color:#719e07">{</span> <span style="color:#719e07">return</span> <span style="color:#719e07">-</span>1<span style="color:#719e07">;</span> <span style="color:#719e07">}</span>
 <span style="color:#dc322f">long</span> <span style="color:#268bd2">g</span><span style="color:#719e07">()</span> <span style="color:#719e07">{</span> <span style="color:#719e07">return</span> 0xffffffff<span style="color:#719e07">;</span> <span style="color:#719e07">}</span>
-</code></pre></div><p>And you&rsquo;d be correct&hellip; if you&rsquo;re writing your code in <em>Java</em>. In most other popular languages ( like C++, Python, JavaScript, Rust, Go, Haskell, Swift, Kotlin &amp; C# ), you&rsquo;d get the following output:</p>
+</code></pre></div><p>And you&rsquo;d be correct&hellip; if you&rsquo;re writing your code in <em>Java</em>. In most other popular languages ( like <em>C++, Python, JavaScript, Rust, Go, Haskell, Swift, Kotlin &amp; C#</em> ), you&rsquo;d get the following output:</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">f() : -1
 g() : 4294967295
 </code></pre></div><p>This was surprising for me. And until I read the references, I thought this was a bug. In my defense though, I checked on compiler explorer and found that C++ compilers behaved inconsistently under different circumstances. For example:</p>
 <ol>
-<li>for x86-64 architecture, MSVC returns <code>-1</code> from <code>g()</code> but, it&rsquo;s not the same with GCC or Clang. <a href="https://godbolt.org/z/77Mh8ssab">check here</a></li>
-<li>for RISC-V 64-bit architecture, GCC &amp; Clang returns <code>-1</code> ( <a href="https://godbolt.org/z/dbETEKz4e">check here</a> ) and,</li>
-<li>for ARM v8 64-bit architecture, Clang returns <code>-1</code> as the output of <code>g()</code> only when an optimisation is used. <a href="https://godbolt.org/z/z8EjWKPf7">check here</a></li>
+<li>for <code>x86-64</code> architecture, MSVC returns <code>-1</code> from <code>g()</code> but, it&rsquo;s not the same with GCC or Clang. <a href="https://godbolt.org/z/77Mh8ssab">check here</a></li>
+<li>for <code>RISC-V 64-bit</code> architecture, GCC &amp; Clang returns <code>-1</code> ( <a href="https://godbolt.org/z/dbETEKz4e">check here</a> ) and,</li>
+<li>for <code>ARM v8 64-bit</code> architecture, Clang returns <code>-1</code> as the output of <code>g()</code> only when an optimisation is used. <a href="https://godbolt.org/z/z8EjWKPf7">check here</a></li>
 </ol>
 <p>So, there <em>is</em> a bug, just not where I initially thought.</p>
-<p>The large positive number returned earlier is the expected behavior because in those languages there are <em><strong>NO NEGATIVE INTEGER LITERALS</strong></em>. Then what&rsquo;s the <code>-1</code> that&rsquo;s returned in <code>f()</code>? Well, that&rsquo;s a <code>unary minus expression</code>. It means that <code>-1</code> is actually <code>-(1)</code> i.e. two tokens &lt;minus&gt; &lt;integer_literal&gt;.</p>
-<p>This new information helps us understand that even if a negative number is represented in two&rsquo;s-complement system internally, the languages are treating <code>0xffffffff</code> as a <em><strong>POSITIVE INTEGER LITERAL</strong></em> and since the largest positive number that can fit in a 32-bit integer is <code>0x7fffffff</code>, the literal <code>0xffffffff</code> is first coerced into a 64-bit integer then that value, <code>4294967295</code>, is returned as the result.</p>
-<p>Then, what does Java do differently? In Java, while the decimal integer <code>-1</code> is a unary expression, it allows you to write two&rsquo;s-complement representation for negative integer literals in hex, oct and binary. So, <code>0xffffffff</code> is a literal, not an expression, which represents <code>-1</code>.</p>
-<p>This behavior of not allowing negative integer literals is a design choice of a language. As an explanation, all I could find was that <em>&ldquo;it&rsquo;s a convention to simplify the grammar&rdquo;</em>.</p>
-<p>By treating negative integer literals as expressions, while it simplifies the grammar, it now has to deal with <em><strong>operator precedence</strong></em>. Some languages like Python, JavaScript, Kotlin &amp; Rust allows method calls on integer literals which means that reality and expectations won&rsquo;t match if you don&rsquo;t surround your unary minus expression with parentheses as the operator resolution operator generally has higher precedence than unary minus operator. For example:</p>
+<p>The large positive number returned earlier is the expected behavior because in those languages there are <em><strong>NO negative integer literals</strong></em>. Then what&rsquo;s the <code>-1</code> that&rsquo;s returned in <code>f()</code>? Well, that&rsquo;s a <code>unary minus expression</code>. It means that <code>-1</code> is actually <code>-(1)</code> i.e. two tokens <code>&lt;minus&gt; &lt;integer_literal&gt;</code>.</p>
+<p>This new information helps us understand that even if a negative number is represented in two&rsquo;s-complement system internally, the languages are treating <code>0xffffffff</code> as a <em><strong>positive integer literal</strong></em> and since the largest positive number that can fit in a 32-bit integer is <code>0x7fffffff</code>, the literal <code>0xffffffff</code> is first coerced into a 64-bit integer and then that value, <code>4294967295</code>, is returned as the result.</p>
+<p>But, why? A common supporting argument is that <em>&ldquo;it&rsquo;s a convention to simplify the grammar&rdquo;</em>. If you treat negative integers as literals, you now need to make either the Lexer or the Parser smart enough to differentiate them with unary-minus and other arithmetic expressions. I found this behaviour even in <code>FORTRAN</code> which was developed in 1950s, specifically designed for scientific and engineering applications. So another argument for this behaviour, I guess, could be is to keep it consistent with mathematics i.e., <em>a negative number is the result of an additive inverse operation over a positive number denoted by the minus sign</em>.  But, there are other challenges that arise due to this.</p>
+<p>First, by treating negative integers as unary-minus expression, there is already a conflict with other <em><strong>operators</strong></em> like <code>pre-decrement</code> and <code>subtraction</code> operators. For example, the grammar already needs to be smart enough to differentiate between a <code>--5</code> and a <code>--x</code>.</p>
+<p>Second, languages now have to deal with <em><strong>operator precedence</strong></em>. Some languages like Python, JavaScript, Kotlin &amp; Rust allows method calls on integer literals which means that reality and expectations won&rsquo;t match if you don&rsquo;t surround your unary minus expression with parentheses as the operator resolution operator generally has higher precedence than unary minus operator. For example:</p>
 <p>In Kotlin:</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Kotlin" data-lang="Kotlin">println( -<span style="color:#2aa198">1.</span>plus(<span style="color:#2aa198">2</span>) ) <span style="color:#586e75">// prints &#39;-3&#39;
 </span><span style="color:#586e75"></span>println( (-<span style="color:#2aa198">1</span>).plus(<span style="color:#2aa198">2</span>) ) <span style="color:#586e75">// prints &#39;1&#39;
@@ -98,7 +98,14 @@ g() : 4294967295
 </span></code></pre></div><p>In Rust:</p>
 <div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Rust" data-lang="Rust">println!( <span style="color:#2aa198">&#34;{}&#34;</span>, <span style="color:#719e07">-</span><span style="color:#2aa198">9</span><span style="color:#719e07">i32</span>.abs( ) );   <span style="color:#586e75">// prints -9
 </span><span style="color:#586e75"></span>println!( <span style="color:#2aa198">&#34;{}&#34;</span>, (<span style="color:#719e07">-</span><span style="color:#2aa198">9</span><span style="color:#719e07">i32</span>).abs( ) ); <span style="color:#586e75">// prints  9
-</span></code></pre></div><p>Then there&rsquo;s <em><strong>operator overloading</strong></em> in <code>C++</code>. But, luckily, overloaded &lsquo;<code>operator-</code>&rsquo; must have at least one parameter of class or enum type so, I can&rsquo;t overload it here for unary integer literals. <em>phew!</em></p>
+</span></code></pre></div><p>In Ada, <code>mod</code> and <code>rem</code> are evaluated before <code>unary minus</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#93a1a1;background-color:#002b36;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Ada" data-lang="Ada"><span style="color:#719e07">-</span><span style="color:#2aa198">7</span> <span style="color:#719e07">mod</span> <span style="color:#2aa198">5</span> <span style="color:#719e07">//</span> evaluates to <span style="color:#719e07">-</span><span style="color:#2aa198">2</span>
+(<span style="color:#719e07">-</span><span style="color:#2aa198">7</span>) <span style="color:#719e07">mod</span> <span style="color:#2aa198">5</span> <span style="color:#719e07">//</span> evaluates <span style="color:#2aa198">3</span>
+</code></pre></div><p>Third, there&rsquo;s <em><strong>operator overloading</strong></em> in languages like <code>C++</code>. But, luckily, overloaded &lsquo;<code>operator-</code>&rsquo; must have at least one parameter of a user-defined type so, it can&rsquo;t be overloaded. <em>phew!</em></p>
+<p>Interestingly, some languages <strong>DO NOT</strong> follow this convention and allow an <em><strong>alternate syntax</strong></em> for negative numbers.</p>
+<p>For example, <code>APL</code>, an array-programming language, uses a <code>high-minus</code>(unicode code point <code>U+00AF</code>) sign e.g. <code>¯3</code> as opposed to regular minus <code>-3</code> to denote negative numbers and <code>J</code>, another array-programming language, uses <code>unsderscore</code>, e.g. <code>_3</code>, as a prefix for the same.</p>
+<p>Then there&rsquo;s Java. In Java, while the decimal integer <code>-1</code> is a unary expression, it allows you to write two&rsquo;s-complement representation for negative integers in hex, oct and binary. So, <code>0xffffffff</code> is a literal, not an expression, which represents <code>-1</code>.</p>
+<p>Bottom line is, handling of negative numbers may vary between languages depending on their language design choice and it&rsquo;d be better to tread with caution.</p>
 <p>I&rsquo;ve added all the test codes in <a href="https://github.com/GLaDOS-418/negative_integer_literal">this github repo</a>. To add other languages, please create a pull request.</p>
 <h4 id="references">References</h4>
 <ul>
@@ -109,6 +116,10 @@ g() : 4294967295
 <li><a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/negative_literals.html">Haskell | 6.9.1. Negative literals</a></li>
 <li><a href="https://docs.python.org/3/reference/lexical_analysis.html#numeric-literals">Python | 2. Lexical analysis</a></li>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#numeric_literals">JavaScript | Grammar and types | MDN</a></li>
+<li><a href="about:reader?url=https%3A%2F%2Fwww.adaic.org%2Fresources%2Fadd_content%2Fdocs%2Fcraft%2Fhtml%2Fch05.htm%235.2#5.2">Ada 95: Chapter 5</a></li>
+<li><a href="https://www.jsoftware.com/help/primer/negative_number.htm">J Language : Negative number</a></li>
+<li><a href="https://en.wikipedia.org/wiki/APL_syntax_and_symbols#Miscellaneous">APL syntax and symbols - Wikipedia</a></li>
+<li><a href="https://archive.org/details/ansi-x-3.9-1966-fortran-66/page/11/mode/1up?view=theater">ANSI X 3.9 1966 Fortran 66</a></li>
 </ul>
 
     </div>
@@ -129,7 +140,410 @@ g() : 4294967295
       
     </div>
 
+    
+
+
+
+
+
+
+
+
+
+
+
+
   
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+ 
+
+
+
+
+  
+
+
+<style>
+  .social-share-buttons {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding-block: 1em;
+    margin-top: 1em;
+  }
+
+  .resp-sharing-button__link,
+  .resp-sharing-button__icon {
+    display: inline-block
+  }
+
+    .resp-sharing-button__link {
+      text-decoration: none;
+      color: #fff !important;
+      margin: 0.3em
+    }
+
+    .resp-sharing-button {
+      border-radius: 5px;
+      transition: 25ms ease-out;
+      padding: 0.3em 0.6em;
+      font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+        
+    }
+
+    .resp-sharing-button__icon svg {
+      width: 1em;
+      height: 1em;
+      margin-right: 0.4em;
+      vertical-align: middle
+    }
+
+    .resp-sharing-button--small svg {
+      margin: 0;
+      vertical-align: middle
+    }
+
+     
+    .resp-sharing-button__icon {
+      stroke: #fff;
+      fill: none
+    }
+
+     
+    .resp-sharing-button__icon--solid,
+    .resp-sharing-button__icon--solidcircle {
+      fill: #fff;
+      stroke: none
+    }
+
+    .resp-sharing-button--twitter {
+      background-color: #55acee
+    }
+
+    .resp-sharing-button--twitter:hover {
+      background-color: #2795e9
+    }
+
+    .resp-sharing-button--pinterest {
+      background-color: #bd081c
+    }
+
+    .resp-sharing-button--pinterest:hover {
+      background-color: #8c0615
+    }
+
+    .resp-sharing-button--facebook {
+      background-color: #3b5998
+    }
+
+    .resp-sharing-button--facebook:hover {
+      background-color: #2d4373
+    }
+
+    .resp-sharing-button--tumblr {
+      background-color: #35465C
+    }
+
+    .resp-sharing-button--tumblr:hover {
+      background-color: #222d3c
+    }
+
+    .resp-sharing-button--reddit {
+      background-color: #ff4500
+    }
+
+    .resp-sharing-button--reddit:hover {
+      background-color: #3a80c1
+    }
+
+    .resp-sharing-button--google {
+      background-color: #dd4b39
+    }
+
+    .resp-sharing-button--google:hover {
+      background-color: #c23321
+    }
+
+    .resp-sharing-button--linkedin {
+      background-color: #0077b5
+    }
+
+    .resp-sharing-button--linkedin:hover {
+      background-color: #046293
+    }
+
+    .resp-sharing-button--email {
+      background-color: #777
+    }
+
+    .resp-sharing-button--email:hover {
+      background-color: #5e5e5e
+    }
+
+    .resp-sharing-button--xing {
+      background-color: #1a7576
+    }
+
+    .resp-sharing-button--xing:hover {
+      background-color: #114c4c
+    }
+
+    .resp-sharing-button--whatsapp {
+      background-color: #25D366
+    }
+
+    .resp-sharing-button--whatsapp:hover {
+      background-color: #1da851
+    }
+
+    .resp-sharing-button--hackernews {
+      background-color: #FF6600
+    }
+    .resp-sharing-button--hackernews:hover, .resp-sharing-button--hackernews:focus {   background-color: #FB6200 }
+
+    .resp-sharing-button--vk {
+      background-color: #507299
+    }
+
+    .resp-sharing-button--vk:hover {
+      background-color: #43648c
+    }
+
+    .resp-sharing-button--facebook {
+      background-color: #3b5998;
+      border-color: #3b5998;
+    }
+
+    .resp-sharing-button--facebook:hover,
+    .resp-sharing-button--facebook:active {
+      background-color: #2d4373;
+      border-color: #2d4373;
+    }
+
+    .resp-sharing-button--twitter {
+      background-color: #55acee;
+      border-color: #55acee;
+    }
+
+    .resp-sharing-button--twitter:hover,
+    .resp-sharing-button--twitter:active {
+      background-color: #2795e9;
+      border-color: #2795e9;
+    }
+
+    .resp-sharing-button--tumblr {
+      background-color: #35465C;
+      border-color: #35465C;
+    }
+
+    .resp-sharing-button--tumblr:hover,
+    .resp-sharing-button--tumblr:active {
+      background-color: #222d3c;
+      border-color: #222d3c;
+    }
+
+    .resp-sharing-button--email {
+      background-color: #777777;
+      border-color: #777777;
+    }
+
+    .resp-sharing-button--email:hover,
+    .resp-sharing-button--email:active {
+      background-color: #5e5e5e;
+      border-color: #5e5e5e;
+    }
+
+    .resp-sharing-button--pinterest {
+      background-color: #bd081c;
+      border-color: #bd081c;
+    }
+
+    .resp-sharing-button--pinterest:hover,
+    .resp-sharing-button--pinterest:active {
+      background-color: #8c0615;
+      border-color: #8c0615;
+    }
+
+    .resp-sharing-button--linkedin {
+      background-color: #0077b5;
+      border-color: #0077b5;
+    }
+
+    .resp-sharing-button--linkedin:hover,
+    .resp-sharing-button--linkedin:active {
+      background-color: #046293;
+      border-color: #046293;
+    }
+
+    .resp-sharing-button--reddit {
+      background-color: #ff4500;
+      border-color: #ff4500;
+    }
+
+    .resp-sharing-button--reddit:hover,
+    .resp-sharing-button--reddit:active {
+      background-color: #ff5700;
+      border-color: #ff5700;
+    }
+
+    .resp-sharing-button--xing {
+      background-color: #1a7576;
+      border-color: #1a7576;
+    }
+
+    .resp-sharing-button--xing:hover
+    .resp-sharing-button--xing:active {
+      background-color: #114C4C;
+      border-color: #114C4C;
+    }
+
+    .resp-sharing-button--whatsapp {
+      background-color: #25D366;
+      border-color: #25D366;
+    }
+
+    .resp-sharing-button--whatsapp:hover,
+    .resp-sharing-button--whatsapp:active {
+      background-color: #1DA851;
+      border-color: #1DA851;
+    }
+
+    .resp-sharing-button--hackernews {
+      background-color: #FF6600;
+      border-color: #FF6600;
+    }
+
+    .resp-sharing-button--hackernews:hover
+    .resp-sharing-button--hackernews:active {
+      background-color: #FB6200;
+      border-color: #FB6200;
+    }
+
+    .resp-sharing-button--vk {
+      background-color: #507299;
+      border-color: #507299;
+    }
+
+    .resp-sharing-button--vk:hover
+    .resp-sharing-button--vk:active {
+      background-color: #43648c;
+      border-color: #43648c;
+    }
+
+    .resp-sharing-button--telegram {
+      background-color: #54A9EB;
+    }
+
+    .resp-sharing-button--telegram:hover {
+      background-color: #4B97D1;
+    }
+</style>
+
+
+<div class="social-share-buttons">
+
+  
+  
+  <a class="resp-sharing-button__link" href="https://facebook.com/sharer/sharer.php?u=https://glados-418.github.io/posts/negative-integer-literals/" target="_blank" rel="noopener" aria-label="" title="Facebook">
+    <div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--medium"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z"/></svg>
+        
+        
+      </div>Facebook
+    </div>
+  </a>
+  
+
+  
+  
+  <a class="resp-sharing-button__link" href="https://twitter.com/intent/tweet/?text=Negative%20Integer%20Literals&amp;url=https://glados-418.github.io/posts/negative-integer-literals/" target="_blank" rel="noopener" aria-label="" title="Twitter">
+    <div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--medium"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z"/></svg>
+        
+            
+      </div>Twitter
+    </div>
+  </a>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+  <a class="resp-sharing-button__link" href="https://reddit.com/submit/?url=https://glados-418.github.io/posts/negative-integer-literals/&amp;resubmit=true&amp;title=Negative%20Integer%20Literals" target="_blank" rel="noopener" aria-label="" title="Reddit">
+    <div class="resp-sharing-button resp-sharing-button--reddit resp-sharing-button--medium"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 11.5c0-1.65-1.35-3-3-3-.96 0-1.86.48-2.42 1.24-1.64-1-3.75-1.64-6.07-1.72.08-1.1.4-3.05 1.52-3.7.72-.4 1.73-.24 3 .5C17.2 6.3 18.46 7.5 20 7.5c1.65 0 3-1.35 3-3s-1.35-3-3-3c-1.38 0-2.54.94-2.88 2.22-1.43-.72-2.64-.8-3.6-.25-1.64.94-1.95 3.47-2 4.55-2.33.08-4.45.7-6.1 1.72C4.86 8.98 3.96 8.5 3 8.5c-1.65 0-3 1.35-3 3 0 1.32.84 2.44 2.05 2.84-.03.22-.05.44-.05.66 0 3.86 4.5 7 10 7s10-3.14 10-7c0-.22-.02-.44-.05-.66 1.2-.4 2.05-1.54 2.05-2.84zM2.3 13.37C1.5 13.07 1 12.35 1 11.5c0-1.1.9-2 2-2 .64 0 1.22.32 1.6.82-1.1.85-1.92 1.9-2.3 3.05zm3.7.13c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9.8 4.8c-1.08.63-2.42.96-3.8.96-1.4 0-2.74-.34-3.8-.95-.24-.13-.32-.44-.2-.68.15-.24.46-.32.7-.18 1.83 1.06 4.76 1.06 6.6 0 .23-.13.53-.05.67.2.14.23.06.54-.18.67zm.2-2.8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm5.7-2.13c-.38-1.16-1.2-2.2-2.3-3.05.38-.5.97-.82 1.6-.82 1.1 0 2 .9 2 2 0 .84-.53 1.57-1.3 1.87z"/></svg>
+        
+            
+      </div>Reddit
+    </div>
+  </a>
+  
+
+  
+
+  
+  
+  <a class="resp-sharing-button__link" href="whatsapp://send?text=Negative%20Integer%20Literals%20https://glados-418.github.io/posts/negative-integer-literals/" target="_blank" rel="noopener" aria-label="">
+    <div class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--medium"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.1 3.9C17.9 1.7 15 .5 12 .5 5.8.5.7 5.6.7 11.9c0 2 .5 3.9 1.5 5.6L.6 23.4l6-1.6c1.6.9 3.5 1.3 5.4 1.3 6.3 0 11.4-5.1 11.4-11.4-.1-2.8-1.2-5.7-3.3-7.8zM12 21.4c-1.7 0-3.3-.5-4.8-1.3l-.4-.2-3.5 1 1-3.4L4 17c-1-1.5-1.4-3.2-1.4-5.1 0-5.2 4.2-9.4 9.4-9.4 2.5 0 4.9 1 6.7 2.8 1.8 1.8 2.8 4.2 2.8 6.7-.1 5.2-4.3 9.4-9.5 9.4zm5.1-7.1c-.3-.1-1.7-.9-1.9-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6.1s-1.2-.5-2.3-1.4c-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6s.3-.3.4-.5c.2-.1.3-.3.4-.5.1-.2 0-.4 0-.5C10 9 9.3 7.6 9 7c-.1-.4-.4-.3-.5-.3h-.6s-.4.1-.7.3c-.3.3-1 1-1 2.4s1 2.8 1.1 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.3-.3-.4-.6-.5z"/></svg>
+        
+            
+      </div>WhatsApp
+    </div>
+  </a>
+  
+
+  
+  
+  <a class="resp-sharing-button__link" href="https://news.ycombinator.com/submitlink?u=https://glados-418.github.io/posts/negative-integer-literals/&amp;t=Negative%20Integer%20Literals" target="_blank" rel="noopener" aria-label="">
+    <div class="resp-sharing-button resp-sharing-button--hackernews resp-sharing-button--medium"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><path fill-rule="evenodd" d="M60.94 82.314L17 0h20.08l25.85 52.093c.397.927.86 1.888 1.39 2.883.53.994.995 2.02 1.393 3.08.265.4.463.764.596 1.095.13.334.262.63.395.898.662 1.325 1.26 2.618 1.79 3.877.53 1.26.993 2.42 1.39 3.48 1.06-2.254 2.22-4.673 3.48-7.258 1.26-2.585 2.552-5.27 3.877-8.052L103.49 0h18.69L77.84 83.308v53.087h-16.9v-54.08z"></path></svg>
+        
+              
+      </div>Hacker News
+    </div>
+  </a>
+  
+
+  
+
+  
+
+</div>
+
+
+
+    
 
 
 
@@ -164,7 +578,7 @@ g() : 4294967295
 
   <div class="footer wrapper">
   <nav class="nav">
-    <div> comments by <a href="https://giscus.app">Giscus</a> | <a href="https://github.com/vividvilla/ezhil">Ezhil Theme</a> | Built with <a href="https://gohugo.io">Hugo</a></div>
+    <div> powered by  <a href="https://gohugo.io">Hugo Site Generator</a> | <a href="https://giscus.app">Giscus Comments</a> | <a href="https://github.com/glados-418/ezhil">Ezhil Theme</a> | <a href="https://github.com/Stals/hugo-share-buttons">Share Buttons</a></div>
   </nav>
 </div>
 
