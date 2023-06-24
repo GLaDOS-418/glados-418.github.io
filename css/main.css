@@ -1,5 +1,5 @@
 body {
-    font-family: "IBM Plex Mono", sans-serif;
+    font-family: "IBM Plex Mono";
     font-weight: 400;
     color: #333;
     line-height: 1.6;
@@ -183,7 +183,7 @@ ul {
     margin-bottom: 0;
     margin-top: 0;
     padding: 20px;
-    background-color: transparent !important;
+    background-color: #312 !important;
 }
 
 .highlight {
@@ -195,9 +195,13 @@ pre code {
   display: inline-block;
 }
   
-code {
+p code, li code, table th code, table td code {
   display: inline;
-  background: #e4e4e4;
+  background: #f3f3f3;
+}
+
+code {
+  font-family: "IBM Plex Mono";
 }
 
 .wrapper {
