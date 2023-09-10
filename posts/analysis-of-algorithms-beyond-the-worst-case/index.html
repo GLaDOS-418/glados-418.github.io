@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Analysis of algorithms beyond the worst case - smirking teapot</title><link rel="icon" type="image/png" href=https://glados-418.github.io/icons/favicon.png /><meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  
+  <meta property="og:image" content="/images/feature.jpg">
+  
+
+  
+  <meta property="twitter:image" content="/images/feature.jpg">
+  <meta property="og:title" content="Analysis of algorithms beyond the worst case" />
+<meta property="og:description" content="An introduction to the average case, probabilistic &amp; amortized analysis of algorithms." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://glados-418.github.io/posts/analysis-of-algorithms-beyond-the-worst-case/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-09-10T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-09-10T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Analysis of algorithms beyond the worst case"/>
+<meta name="twitter:description" content="An introduction to the average case, probabilistic &amp; amortized analysis of algorithms."/>
+
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Code&display=swap">
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono&display=swap">
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,300italic,400italic|Raleway:200,300">
+
+  <link rel="stylesheet" type="text/css" media="screen" href="https://glados-418.github.io/css/normalize.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="https://glados-418.github.io/css/main.css" /><link rel="stylesheet" type="text/css" href="https://glados-418.github.io/css/dark.css" media="(prefers-color-scheme: dark)" />
+
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <script src="https://glados-418.github.io/js/main.js"></script>
+</head>
+
+<body>
+  <div class="container wrapper post">
+    <div class="header">
+  <base href="https://glados-418.github.io/">
+  <h1 class="site-title"><a href="https://glados-418.github.io/">smirking teapot</a></h1>
+  <div class="site-description"><h2>&ldquo;I&rsquo;m not an expert, I&rsquo;m just a dude.&rdquo; -Scott Schurr, CppCon 2015.</h2><nav class="nav social">
+      <ul class="flat"><a href="https://github.com/GLaDOS-418" title="github"><i data-feather="github"></i></a><a href="https://twitter.com/GLaDOS418" title="twitter"><i data-feather="twitter"></i></a></ul>
+    </nav>
+  </div>
+
+  <nav class="nav">
+    <ul class="flat">
+      
+      <li>
+        <a href="/">home</a>
+      </li>
+      
+      <li>
+        <a href="/posts">posts</a>
+      </li>
+      
+      <li>
+        <a href="/tags">tags</a>
+      </li>
+      
+    </ul>
+  </nav>
+</div>
+
+
+    <div class="post-header">
+      <h1 class="title">Analysis of algorithms beyond the worst case</h1>
+      <div class="meta">Posted at &mdash; Sep 10, 2023</div>
+    </div>
+
+    <div class="markdown">
+      <p>The <code>worst-case</code> analysis gives a theoretical <code>upper bound</code> on the algorithmic performance. It&rsquo;s important but, it has its limitations. So, there are other kinds of analyses to fill those gaps.</p>
+<h2 id="average-case-analysis">Average Case Analysis</h2>
+<ul>
+<li>&lsquo;average cost&rsquo; over <em>all the inputs</em>.</li>
+<li>It&rsquo;s possible for some inputs to perform more poorly than the rest but, assuming that every input is equally likely to occur, the impact of those inputs might be low in real-time.</li>
+<li>For example, in some implementation of quicksort it&rsquo;s possible that for a (nearly) sorted array, the time complexity is <code>O(n^2)</code>. But, for a sufficiently large <code>n</code>, those inputs would be very rare.</li>
+<li>upon averaging the cost across all the inputs, the average cost will still be <code>O(nlogn)</code>.</li>
+<li><strong>NOTE1</strong>: the &lsquo;worst case&rsquo; metes out the punishment of the worst input to all inputs. Thus, for the above case, the worst case time complexity is <code>O(n^2)</code>.</li>
+<li><strong>NOTE2</strong>: the &lsquo;average case&rsquo; distributes the punishment of worst inputs over all the whole input space.</li>
+</ul>
+<p><img src="images/algorithm-analysis-quadratic-nlogn.png" alt="algorithm-analysis-quadratic-nlogn"></p>
+<h2 id="probabilistic-analysis">Probabilistic Analysis</h2>
+<ul>
+<li>this is similar to <code>average case</code> except that <code>probabilistic analysis</code> distributes the cost of the algorithm using a <em>weighted average</em> of the probability of an input to occur as opposed to <code>average case</code> which distributes the bad performance of a few inputs evenly.</li>
+<li>this plugs the hole of <strong>long tail problem</strong> in the input space where &lsquo;some&rsquo; inputs may occur &lsquo;most&rsquo; of the time.</li>
+<li>for example, we might have a problem statement where we almost always get a sorted array as an input and very rarely an unsorted one. With the quicksort implementation from the average case analysis, the real performance will (almost) always be <code>O(n^2)</code> i.e. close to worst-case than the average case. maybe, to remediate that we might want to introduce some check for sorted-ness.</li>
+<li>maybe our inputs will always be either 0 or 1 in which case might want to question the use of quicksort itself.</li>
+<li><strong>NOTE1:</strong> the probabilistic analysis takes the input space distribution into account unlike other analysis methods.</li>
+<li><strong>NOTE2:</strong> the &lsquo;worst case&rsquo; of quicksort is still <code>O(n^2)</code> and the &lsquo;average case&rsquo; is still <code>O(nlogn)</code>.</li>
+</ul>
+<p><img src="images/algorithmic-analysis-probabilistic-analysis.png" alt="algorithmic-analysis-probabilistic-analysis"></p>
+<h2 id="amortized-analysis">Amortized Analysis</h2>
+<ul>
+<li>&lsquo;average cost&rsquo; over a <em>sequence</em> of <em>operations</em>.</li>
+<li>for example, a vector insertion in the back is <code>O(1)</code> when <code>size &lt; capacity</code> but, <code>O(n)</code> when <code>size == capacity</code> because of reallocation and move of elements from old memory locations to the new.</li>
+<li>Now, with a very poor implementation of capacity extension which increases the capacity by 1, once the initial capacity is exhausted, you&rsquo;ll be in a perpetual state of inserting elements into a fully utilised vector making every operation as <code>O(n)</code> with the amortized time complexity of <code>O(n)</code>.</li>
+<li>But, if the capacity increases with, say, a factor of 2, the number of reallocations for the same number of elements decreases exponentially with every increase in capacity effectively making back insertion as <code>O(1)</code> for almost all cases with a very few <code>O(n)</code> operations making the amortized time complexity as <code>O(1)</code>.</li>
+<li><strong>NOTE1</strong>: the &lsquo;worst case&rsquo; is still <code>O(n)</code>.</li>
+<li><strong>NOTE2</strong>: unlike the average case amortized analysis isn&rsquo;t looking at the input rather at the sequence of operations.</li>
+</ul>
+<p><img src="images/algorithmic-analysis-amortized-analysis.png" alt="algorithmic-analysis-amortized-analysis"></p>
+<h2 id="real-time-performance">Real-Time Performance</h2>
+<ul>
+<li>while theoretical analysis of algorithms helps to reason about and narrow down the implementation candidates, the <em>real-time performance</em> is ultimately what matters. with a better on-paper time-complexity, it&rsquo;s possible for an algorithm to perform worse than its counterparts.</li>
+<li>for example, the sorting implementation in the standard lib of many languages opt for a hybrid approach where they use insertion sort for small vectors which has an average and worst case of <code>O(n^2)</code> or similarly for small vectors, a linear search may be better than binary search. Both because of <em>locality of reference</em>  of the elements leading to more <em>cache-hits</em>.</li>
+</ul>
+
+    </div>
+
+    <div class="post-tags">
+      
+        
+          <nav class="nav tags">
+              <ul class="flat">
+                
+                <li><a href="/tags/programming/algorithms">programming/algorithms</a></li>
+                
+              </ul>
+          </nav>
+        
+      
+    </div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+ 
+
+
+
+
+  
+
+
+<style>
+  .social-share-buttons {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding-block: 1em;
+    margin-top: 1em;
+  }
+
+  .resp-sharing-button__link,
+  .resp-sharing-button__icon {
+    display: inline-block
+  }
+
+    .resp-sharing-button__link {
+      text-decoration: none;
+      color: #fff !important;
+      margin: 0.3em
+    }
+
+    .resp-sharing-button {
+      border-radius: 5px;
+      transition: 25ms ease-out;
+      padding: 0.3em 0.6em;
+      font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+        
+    }
+
+    .resp-sharing-button__icon svg {
+      width: 1em;
+      height: 1em;
+      margin-right: 0.4em;
+      vertical-align: middle
+    }
+
+    .resp-sharing-button--small svg {
+      margin: 0;
+      vertical-align: middle
+    }
+
+     
+    .resp-sharing-button__icon {
+      stroke: #fff;
+      fill: none
+    }
+
+     
+    .resp-sharing-button__icon--solid,
+    .resp-sharing-button__icon--solidcircle {
+      fill: #fff;
+      stroke: none
+    }
+
+    .resp-sharing-button--twitter {
+      background-color: #55acee
+    }
+
+    .resp-sharing-button--twitter:hover {
+      background-color: #2795e9
+    }
+
+    .resp-sharing-button--pinterest {
+      background-color: #bd081c
+    }
+
+    .resp-sharing-button--pinterest:hover {
+      background-color: #8c0615
+    }
+
+    .resp-sharing-button--facebook {
+      background-color: #3b5998
+    }
+
+    .resp-sharing-button--facebook:hover {
+      background-color: #2d4373
+    }
+
+    .resp-sharing-button--tumblr {
+      background-color: #35465C
+    }
+
+    .resp-sharing-button--tumblr:hover {
+      background-color: #222d3c
+    }
+
+    .resp-sharing-button--reddit {
+      background-color: #ff4500
+    }
+
+    .resp-sharing-button--reddit:hover {
+      background-color: #3a80c1
+    }
+
+    .resp-sharing-button--google {
+      background-color: #dd4b39
+    }
+
+    .resp-sharing-button--google:hover {
+      background-color: #c23321
+    }
+
+    .resp-sharing-button--linkedin {
+      background-color: #0077b5
+    }
+
+    .resp-sharing-button--linkedin:hover {
+      background-color: #046293
+    }
+
+    .resp-sharing-button--email {
+      background-color: #777
+    }
+
+    .resp-sharing-button--email:hover {
+      background-color: #5e5e5e
+    }
+
+    .resp-sharing-button--xing {
+      background-color: #1a7576
+    }
+
+    .resp-sharing-button--xing:hover {
+      background-color: #114c4c
+    }
+
+    .resp-sharing-button--whatsapp {
+      background-color: #25D366
+    }
+
+    .resp-sharing-button--whatsapp:hover {
+      background-color: #1da851
+    }
+
+    .resp-sharing-button--hackernews {
+      background-color: #FF6600
+    }
+    .resp-sharing-button--hackernews:hover, .resp-sharing-button--hackernews:focus {   background-color: #FB6200 }
+
+    .resp-sharing-button--vk {
+      background-color: #507299
+    }
+
+    .resp-sharing-button--vk:hover {
+      background-color: #43648c
+    }
+
+    .resp-sharing-button--facebook {
+      background-color: #3b5998;
+      border-color: #3b5998;
+    }
+
+    .resp-sharing-button--facebook:hover,
+    .resp-sharing-button--facebook:active {
+      background-color: #2d4373;
+      border-color: #2d4373;
+    }
+
+    .resp-sharing-button--twitter {
+      background-color: #55acee;
+      border-color: #55acee;
+    }
+
+    .resp-sharing-button--twitter:hover,
+    .resp-sharing-button--twitter:active {
+      background-color: #2795e9;
+      border-color: #2795e9;
+    }
+
+    .resp-sharing-button--tumblr {
+      background-color: #35465C;
+      border-color: #35465C;
+    }
+
+    .resp-sharing-button--tumblr:hover,
+    .resp-sharing-button--tumblr:active {
+      background-color: #222d3c;
+      border-color: #222d3c;
+    }
+
+    .resp-sharing-button--email {
+      background-color: #777777;
+      border-color: #777777;
+    }
+
+    .resp-sharing-button--email:hover,
+    .resp-sharing-button--email:active {
+      background-color: #5e5e5e;
+      border-color: #5e5e5e;
+    }
+
+    .resp-sharing-button--pinterest {
+      background-color: #bd081c;
+      border-color: #bd081c;
+    }
+
+    .resp-sharing-button--pinterest:hover,
+    .resp-sharing-button--pinterest:active {
+      background-color: #8c0615;
+      border-color: #8c0615;
+    }
+
+    .resp-sharing-button--linkedin {
+      background-color: #0077b5;
+      border-color: #0077b5;
+    }
+
+    .resp-sharing-button--linkedin:hover,
+    .resp-sharing-button--linkedin:active {
+      background-color: #046293;
+      border-color: #046293;
+    }
+
+    .resp-sharing-button--reddit {
+      background-color: #ff4500;
+      border-color: #ff4500;
+    }
+
+    .resp-sharing-button--reddit:hover,
+    .resp-sharing-button--reddit:active {
+      background-color: #ff5700;
+      border-color: #ff5700;
+    }
+
+    .resp-sharing-button--xing {
+      background-color: #1a7576;
+      border-color: #1a7576;
+    }
+
+    .resp-sharing-button--xing:hover
+    .resp-sharing-button--xing:active {
+      background-color: #114C4C;
+      border-color: #114C4C;
+    }
+
+    .resp-sharing-button--whatsapp {
+      background-color: #25D366;
+      border-color: #25D366;
+    }
+
+    .resp-sharing-button--whatsapp:hover,
+    .resp-sharing-button--whatsapp:active {
+      background-color: #1DA851;
+      border-color: #1DA851;
+    }
+
+    .resp-sharing-button--hackernews {
+      background-color: #FF6600;
+      border-color: #FF6600;
+    }
+
+    .resp-sharing-button--hackernews:hover
+    .resp-sharing-button--hackernews:active {
+      background-color: #FB6200;
+      border-color: #FB6200;
+    }
+
+    .resp-sharing-button--vk {
+      background-color: #507299;
+      border-color: #507299;
+    }
+
+    .resp-sharing-button--vk:hover
+    .resp-sharing-button--vk:active {
+      background-color: #43648c;
+      border-color: #43648c;
+    }
+
+    .resp-sharing-button--telegram {
+      background-color: #54A9EB;
+    }
+
+    .resp-sharing-button--telegram:hover {
+      background-color: #4B97D1;
+    }
+</style>
+
+
+<div class="social-share-buttons">
+
+  
+  
+  <a class="resp-sharing-button__link" href="https://facebook.com/sharer/sharer.php?u=https://glados-418.github.io/posts/analysis-of-algorithms-beyond-the-worst-case/" target="_blank" rel="noopener" aria-label="" title="Facebook">
+    <div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z"/></svg>
+        
+        
+      </div>
+    </div>
+  </a>
+  
+
+  
+  
+  <a class="resp-sharing-button__link" href="https://twitter.com/intent/tweet/?text=Analysis%20of%20algorithms%20beyond%20the%20worst%20case&amp;url=https://glados-418.github.io/posts/analysis-of-algorithms-beyond-the-worst-case/" target="_blank" rel="noopener" aria-label="" title="Twitter">
+    <div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z"/></svg>
+        
+            
+      </div>
+    </div>
+  </a>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+  <a class="resp-sharing-button__link" href="https://reddit.com/submit/?url=https://glados-418.github.io/posts/analysis-of-algorithms-beyond-the-worst-case/&amp;resubmit=true&amp;title=Analysis%20of%20algorithms%20beyond%20the%20worst%20case" target="_blank" rel="noopener" aria-label="" title="Reddit">
+    <div class="resp-sharing-button resp-sharing-button--reddit resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 11.5c0-1.65-1.35-3-3-3-.96 0-1.86.48-2.42 1.24-1.64-1-3.75-1.64-6.07-1.72.08-1.1.4-3.05 1.52-3.7.72-.4 1.73-.24 3 .5C17.2 6.3 18.46 7.5 20 7.5c1.65 0 3-1.35 3-3s-1.35-3-3-3c-1.38 0-2.54.94-2.88 2.22-1.43-.72-2.64-.8-3.6-.25-1.64.94-1.95 3.47-2 4.55-2.33.08-4.45.7-6.1 1.72C4.86 8.98 3.96 8.5 3 8.5c-1.65 0-3 1.35-3 3 0 1.32.84 2.44 2.05 2.84-.03.22-.05.44-.05.66 0 3.86 4.5 7 10 7s10-3.14 10-7c0-.22-.02-.44-.05-.66 1.2-.4 2.05-1.54 2.05-2.84zM2.3 13.37C1.5 13.07 1 12.35 1 11.5c0-1.1.9-2 2-2 .64 0 1.22.32 1.6.82-1.1.85-1.92 1.9-2.3 3.05zm3.7.13c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9.8 4.8c-1.08.63-2.42.96-3.8.96-1.4 0-2.74-.34-3.8-.95-.24-.13-.32-.44-.2-.68.15-.24.46-.32.7-.18 1.83 1.06 4.76 1.06 6.6 0 .23-.13.53-.05.67.2.14.23.06.54-.18.67zm.2-2.8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm5.7-2.13c-.38-1.16-1.2-2.2-2.3-3.05.38-.5.97-.82 1.6-.82 1.1 0 2 .9 2 2 0 .84-.53 1.57-1.3 1.87z"/></svg>
+        
+            
+      </div>
+    </div>
+  </a>
+  
+
+  
+
+  
+  
+  <a class="resp-sharing-button__link" href="whatsapp://send?text=Analysis%20of%20algorithms%20beyond%20the%20worst%20case%20https://glados-418.github.io/posts/analysis-of-algorithms-beyond-the-worst-case/" target="_blank" rel="noopener" aria-label="">
+    <div class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.1 3.9C17.9 1.7 15 .5 12 .5 5.8.5.7 5.6.7 11.9c0 2 .5 3.9 1.5 5.6L.6 23.4l6-1.6c1.6.9 3.5 1.3 5.4 1.3 6.3 0 11.4-5.1 11.4-11.4-.1-2.8-1.2-5.7-3.3-7.8zM12 21.4c-1.7 0-3.3-.5-4.8-1.3l-.4-.2-3.5 1 1-3.4L4 17c-1-1.5-1.4-3.2-1.4-5.1 0-5.2 4.2-9.4 9.4-9.4 2.5 0 4.9 1 6.7 2.8 1.8 1.8 2.8 4.2 2.8 6.7-.1 5.2-4.3 9.4-9.5 9.4zm5.1-7.1c-.3-.1-1.7-.9-1.9-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6.1s-1.2-.5-2.3-1.4c-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6s.3-.3.4-.5c.2-.1.3-.3.4-.5.1-.2 0-.4 0-.5C10 9 9.3 7.6 9 7c-.1-.4-.4-.3-.5-.3h-.6s-.4.1-.7.3c-.3.3-1 1-1 2.4s1 2.8 1.1 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.3-.3-.4-.6-.5z"/></svg>
+        
+            
+      </div>
+    </div>
+  </a>
+  
+
+  
+  
+  <a class="resp-sharing-button__link" href="https://news.ycombinator.com/submitlink?u=https://glados-418.github.io/posts/analysis-of-algorithms-beyond-the-worst-case/&amp;t=Analysis%20of%20algorithms%20beyond%20the%20worst%20case" target="_blank" rel="noopener" aria-label="">
+    <div class="resp-sharing-button resp-sharing-button--hackernews resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><path fill-rule="evenodd" d="M60.94 82.314L17 0h20.08l25.85 52.093c.397.927.86 1.888 1.39 2.883.53.994.995 2.02 1.393 3.08.265.4.463.764.596 1.095.13.334.262.63.395.898.662 1.325 1.26 2.618 1.79 3.877.53 1.26.993 2.42 1.39 3.48 1.06-2.254 2.22-4.673 3.48-7.258 1.26-2.585 2.552-5.27 3.877-8.052L103.49 0h18.69L77.84 83.308v53.087h-16.9v-54.08z"></path></svg>
+        
+              
+      </div>
+    </div>
+  </a>
+  
+
+  
+
+  
+
+</div>
+
+
+
+    
+
+
+
+  
+  
+  
+
+<div class="giscus">
+  <script src                    = "https://giscus.app/client.js"
+          data-repo              = "GLaDOS-418/glados-418.github.io"
+          data-repo-id           = "MDEwOlJlcG9zaXRvcnkxNzEwNzY4ODA="
+          data-category          = "Announcements"
+          data-category-id       = "DIC_kwDOCjJtEM4CXPX4"
+          data-mapping           = "pathname"
+          data-strict            = "1"
+          data-reactions-enabled = ""
+          data-emit-metadata     = "0"
+          data-input-position    = "top"
+          data-theme             = "https://glados-418.github.io//css/giscus.css"
+          data-lang              = "en"
+          data-loading           = "lazy"
+          crossorigin            = "anonymous"
+          async>
+  </script>
+
+  <noscript>please enable javascript to view the comments powered by <a href="https://giscus.app?ref_noscript">giscus</a></noscript>
+
+</div>
+
+
+  </div>
+
+  <div class="footer wrapper">
+  <nav class="nav">
+    <div> powered by  <a href="https://gohugo.io">Hugo Site Generator</a> | <a href="https://giscus.app">Giscus Comments</a> | <a href="https://github.com/glados-418/ezhil">Ezhil Theme</a> | <a href="https://github.com/Stals/hugo-share-buttons">Share Buttons</a></div>
+  </nav>
+</div>
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4PLV27Q77R"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-4PLV27Q77R', { 'anonymize_ip': false });
+}
+</script>
+
+<script>feather.replace()</script>
+
+</body>
+</html>

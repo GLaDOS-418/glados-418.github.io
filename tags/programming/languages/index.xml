@@ -13,7 +13,7 @@
       
       <guid>https://glados-418.github.io/posts/negative-integer-literals/</guid>
       <description>TL;DR: Write your negative numbers in base-10, verify their types and wrap them in parentheses.
-negative numbers are represented in two&amp;rsquo;s complement form and, type promotion of a 32-bit integer to 64-bit integer preserves the value.</description>
+An unusual behaviour There are, generally, two ways to represent a negative integer literal:</description>
     </item>
     
   </channel>
