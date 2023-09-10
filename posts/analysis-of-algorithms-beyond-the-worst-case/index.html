@@ -95,10 +95,10 @@
 <ul>
 <li>&lsquo;average cost&rsquo; over a <em>sequence</em> of <em>operations</em>.</li>
 <li>for example, a vector insertion in the back is <code>O(1)</code> when <code>size &lt; capacity</code> but, <code>O(n)</code> when <code>size == capacity</code> because of reallocation and move of elements from old memory locations to the new.</li>
-<li>Now, with a very poor implementation of capacity extension which increases the capacity by 1, once the initial capacity is exhausted, you&rsquo;ll be in a perpetual state of inserting elements into a fully utilised vector making every operation as <code>O(n)</code> with the amortized time complexity of <code>O(n)</code>.</li>
-<li>But, if the capacity increases with, say, a factor of 2, the number of reallocations for the same number of elements decreases exponentially with every increase in capacity effectively making back insertion as <code>O(1)</code> for almost all cases with a very few <code>O(n)</code> operations making the amortized time complexity as <code>O(1)</code>.</li>
+<li>Now, with a very poor implementation of capacity expansion which increases the capacity by 1, once the initial capacity is exhausted, you&rsquo;ll be in a perpetual state of inserting elements into a fully utilised vector making every operation as <code>O(n)</code> with the amortized time complexity of <code>O(n)</code>.</li>
+<li>But, if the capacity increases by, say, a factor of 2, the number of reallocations for the same number of elements decreases exponentially with every increase in capacity effectively making back insertion as <code>O(1)</code> for almost all cases with a very few <code>O(n)</code> operations making the amortized time complexity as <code>O(1)</code>.</li>
 <li><strong>NOTE1</strong>: the &lsquo;worst case&rsquo; is still <code>O(n)</code>.</li>
-<li><strong>NOTE2</strong>: unlike the average case amortized analysis isn&rsquo;t looking at the input rather at the sequence of operations.</li>
+<li><strong>NOTE2</strong>: unlike the average case, amortized analysis isn&rsquo;t looking at the input rather, it considers the sequence of operations.</li>
 </ul>
 <p><img src="images/algorithmic-analysis-amortized-analysis.png" alt="algorithmic-analysis-amortized-analysis"></p>
 <h2 id="real-time-performance">Real-Time Performance</h2>
