@@ -1,0 +1,8 @@
+.mermaid {
+  background-color: #fff  /* diagram maybe invisible if left to theme background */
+}
+
+[id^="mermaid-rendered-svg"]{
+  height: 400px;
+  width: 100%;
+}
