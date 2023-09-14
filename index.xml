@@ -22,7 +22,7 @@
       <pubDate>Wed, 14 Jun 2023 17:18:54 +0530</pubDate>
       
       <guid>https://glados-418.github.io/posts/negative-integer-literals/</guid>
-      <description>TL;DR: Write your negative numbers in base-10, verify their types and wrap them in parentheses.
+      <description>TL;DR: Write your negative numbers in base-10 and, wrap them in parentheses.
 An unusual behaviour There are, generally, two ways to represent a negative integer literal:</description>
     </item>
     
