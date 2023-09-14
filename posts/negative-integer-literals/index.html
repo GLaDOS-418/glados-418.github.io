@@ -80,8 +80,8 @@
 </ol>
 <p>With the above knowledge,  you&rsquo;d expect that the functions <code>f</code> and <code>g</code> below would return the same value, <code>-1</code>.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C++" data-lang="C++"><span style="display:flex;"><span>Int64 <span style="color:#a6e22e">f</span>() { <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>; }
-</span></span><span style="display:flex;"><span>Int64 <span style="color:#a6e22e">g</span>() { <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0xffffffff</span>; }
-</span></span></code></pre></div><p>And you&rsquo;d be correct&hellip; if you&rsquo;re writing your code in <em>Java</em>. In most other popular languages ( like <em>C++, Python, JavaScript, Rust, Go, Haskell, Swift, Kotlin &amp; C#</em> ), if you write something similar, you&rsquo;d get the following output:</p>
+</span></span><span style="display:flex;"><span>Int64 <span style="color:#a6e22e">g</span>() { <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0xffffffff</span>; } <span style="color:#75715e">// 32-bit hex repr of -1
+</span></span></span></code></pre></div><p>And you&rsquo;d be correct&hellip; if you&rsquo;re writing your code in <em>Java</em>. In most other popular languages ( like <em>C++, Python, JavaScript, Rust, Go, Haskell, Swift, Kotlin &amp; C#</em> ), if you write something similar, you&rsquo;d get the following output:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>f<span style="color:#f92672">()</span> : -1
 </span></span><span style="display:flex;"><span>g<span style="color:#f92672">()</span> : <span style="color:#ae81ff">4294967295</span>
 </span></span></code></pre></div><p>This was surprising for me. And until I read the references, I thought this was a bug.</p>
