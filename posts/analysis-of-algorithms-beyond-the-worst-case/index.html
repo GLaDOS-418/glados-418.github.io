@@ -38,7 +38,7 @@
 <body>
   <div class="container wrapper post">
     <div class="header">
-  <base href="https://glados-418.github.io/">
+  
   <h1 class="site-title"><a href="https://glados-418.github.io/">smirking teapot</a></h1>
   <div class="site-description"><h2>&ldquo;I&rsquo;m not an expert, I&rsquo;m just a dude.&rdquo; -Scott Schurr, CppCon 2015.</h2><nav class="nav social">
       <ul class="flat"><a href="https://github.com/GLaDOS-418" title="github" target="_blank"><i data-feather="github"></i></a><a href="https://twitter.com/smirkingTpot" title="twitter" target="_blank"><i data-feather="twitter"></i></a></ul>
@@ -72,6 +72,20 @@
 
     <div class="markdown">
       <p>The <code>worst-case</code> analysis gives a theoretical <code>upper bound</code> on the algorithmic performance. It&rsquo;s important but, it has its limitations. So, there are other kinds of analyses to fill those gaps.</p>
+
+
+
+<h2 id="outline">Outline</h2>
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#average-case-analysis">Average Case Analysis</a></li>
+    <li><a href="#probabilistic-analysis">Probabilistic Analysis</a></li>
+    <li><a href="#amortized-analysis">Amortized Analysis</a></li>
+    <li><a href="#real-time-performance">Real-Time Performance</a></li>
+  </ul>
+</nav>
+
 <h2 id="average-case-analysis">Average Case Analysis</h2>
 <ul>
 <li>&lsquo;average cost&rsquo; over <em>all the inputs</em>.</li>
@@ -81,7 +95,8 @@
 <li><strong>NOTE1</strong>: the &lsquo;worst case&rsquo; metes out the punishment of the worst input to all inputs. Thus, for the above case, the worst case time complexity is <code>O(n^2)</code>.</li>
 <li><strong>NOTE2</strong>: the &lsquo;average case&rsquo; distributes the punishment of worst inputs over all the whole input space.</li>
 </ul>
-<p><img src="images/algorithm-analysis-quadratic-nlogn.png" alt="algorithm-analysis-quadratic-nlogn"></p>
+<p><img src="/images/algorithm-analysis-quadratic-nlogn.png" alt="algorithm-analysis-quadratic-nlogn"  />
+</p>
 <h2 id="probabilistic-analysis">Probabilistic Analysis</h2>
 <ul>
 <li>this is similar to <code>average case</code> except that <code>probabilistic analysis</code> distributes the cost of the algorithm using a <em>weighted average</em> of the probability of an input to occur as opposed to <code>average case</code> which distributes the bad performance of a few inputs evenly.</li>
@@ -91,7 +106,8 @@
 <li><strong>NOTE1:</strong> the probabilistic analysis takes the input space distribution into account unlike other analysis methods.</li>
 <li><strong>NOTE2:</strong> the &lsquo;worst case&rsquo; of quicksort is still <code>O(n^2)</code> and the &lsquo;average case&rsquo; is still <code>O(nlogn)</code>.</li>
 </ul>
-<p><img src="images/algorithmic-analysis-probabilistic-analysis.png" alt="algorithmic-analysis-probabilistic-analysis"></p>
+<p><img src="/images/algorithmic-analysis-probabilistic-analysis.png" alt="algorithmic-analysis-probabilistic-analysis"  />
+</p>
 <h2 id="amortized-analysis">Amortized Analysis</h2>
 <ul>
 <li>&lsquo;average cost&rsquo; over a <em>sequence</em> of <em>operations</em>.</li>
@@ -101,7 +117,8 @@
 <li><strong>NOTE1</strong>: the &lsquo;worst case&rsquo; is still <code>O(n)</code>.</li>
 <li><strong>NOTE2</strong>: unlike the average case, amortized analysis isn&rsquo;t looking at the input rather, it considers the sequence of operations.</li>
 </ul>
-<p><img src="images/algorithmic-analysis-amortized-analysis.png" alt="algorithmic-analysis-amortized-analysis"></p>
+<p><img src="/images/algorithmic-analysis-amortized-analysis.png" alt="algorithmic-analysis-amortized-analysis"  />
+</p>
 <h2 id="real-time-performance">Real-Time Performance</h2>
 <ul>
 <li>while theoretical analysis of algorithms helps to reason about and narrow down the implementation candidates, the <em>real-time performance</em> is ultimately what matters. with a better on-paper time-complexity, it&rsquo;s possible for an algorithm to perform worse than its counterparts.</li>

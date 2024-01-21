@@ -38,7 +38,7 @@
 <body>
   <div class="container wrapper post">
     <div class="header">
-  <base href="https://glados-418.github.io/">
+  
   <h1 class="site-title"><a href="https://glados-418.github.io/">smirking teapot</a></h1>
   <div class="site-description"><h2>&ldquo;I&rsquo;m not an expert, I&rsquo;m just a dude.&rdquo; -Scott Schurr, CppCon 2015.</h2><nav class="nav social">
       <ul class="flat"><a href="https://github.com/GLaDOS-418" title="github" target="_blank"><i data-feather="github"></i></a><a href="https://twitter.com/smirkingTpot" title="twitter" target="_blank"><i data-feather="twitter"></i></a></ul>
@@ -94,9 +94,11 @@
 </blockquote>
 <p><em><strong>Wojak:</strong> But, so does <code>Strategy</code>?</em></p>
 <p><strong>Teapot:</strong> Well, in a <code>Strategy</code>, the customisation point is added for multiple implementations of a single behaviour. For example, for traversing a graph, the exact implementation of either <code>BreadthFirstSearch</code> or <code>DepthFirstSearch</code> can be provided via a customisation point of <code>TraversalStrategy</code>. To add a new <code>Strategy</code>, the type(<code>Graph</code> in this case) needs to be changed.</p>
-<p><img src="images/StrategyPattern.png" alt=""></p>
+<p><img src="/images/StrategyPattern.png" alt=""  />
+</p>
 <p>Whereas, in a <code>Visitor</code>, <em>ANY</em> behavior can be defined on the type and the type need not be aware of it. For example, Given a <code>Document</code>, I can add both <code>Renderer</code> and <code>PDFConverter</code> without modifying the the <code>Document</code> hierarchy. In other words, a <code>Visitor</code> adds a customisation point for multiple(new) behaviours.</p>
-<p><img src="images/visitor_pattern.png" alt=""></p>
+<p><img src="/images/visitor_pattern.png" alt=""  />
+</p>
 <p><em><strong>Wojak:</strong> hmm&hellip; so why not just use Visitor instead of strategy? more flexibility, right?</em></p>
 <p><strong>Teapot:</strong> The intent of both is very different. <code>Strategy</code> allows to decouple implementations of a behaviour which is the responsibility of the type itself while <code>Visitor</code> allows to decouple any new behaviour which is NOT the responsibility of the type itself while(think Single Responsibility Principle in SOLID).</p>
 <blockquote>
@@ -108,7 +110,8 @@
 </blockquote>
 <p><em><strong>Wojak:</strong> But, doesn&rsquo;t <code>Command</code> also lets you do that?</em></p>
 <p><strong>Teapot:</strong> yes, the difference is that a <code>Command</code> encapsulates a &lsquo;request&rsquo;. Meaning, it decouples the invoker of the &lsquo;behaviour&rsquo; and the receiver of it(type on which the &lsquo;behaviour&rsquo; is to be applied) by encapsulating the receiver in the command itself.</p>
-<p><img src="images/command_pattern.png" alt=""></p>
+<p><img src="/images/command_pattern.png" alt=""  />
+</p>
 <p>In other words, <code>Command</code> is essentially a <code>Receiver-Behaviour</code> pair. This enables the <code>Command</code> to be stored, queued, logged, batched, made undoable, sent over a network etc. Think of command as <strong>&ldquo;function objects&rdquo;</strong> or <strong>&ldquo;capturing lambdas&rdquo;</strong> in C++. This is very useful in <strong>Event-Driven Systems</strong>. Where is the customisation point you may ask? Well, it&rsquo;s where the invocation of the command happens(see Invoker class), that&rsquo;s where the dynamic dispatch works its magic on the polymorphic Command type.</p>
 <p>On the other hand, in a <code>Visitor</code>, a <em><strong>polymorphic type</strong></em> can accept <em><strong>any new behavior</strong></em> that&rsquo;s implementing the the Visitor interface. It&rsquo;s often achieved via double-dispatch and this enables two points of customisation(type &amp; behaviour) as compared to only one(behaviour) in a <code>Command</code>. In this sense, <code>Visitor</code> is a more powerful <code>Command</code>.</p>
 <p><em><strong>Wojak:</strong> Interesting, then why would we ever need a command if visitor is so powerful?</em></p>
@@ -122,7 +125,8 @@
 <p><code>Visitor</code> allows decoupling of new behaviours from a set of similar(polymorphic) types, without modifying the type itself.</p>
 </blockquote>
 <p><em><strong>Wojak:</strong> doesn&rsquo;t that sound a lot like the Type Erasure idiom in C++?</em></p>
-<p><img src="type_erasure.png" alt=""></p>
+<p><img src="/type_erasure.png" alt=""  />
+</p>
 <p><strong>Teapot:</strong> Not really. Even though <code>Type Erasure</code> lets you decouple behaviours from a set of types, the difference is that <code>Type Erasure</code> does this by trying to mimic <code>Structural Subtyping</code> while a <code>Visitor</code> sticks to the usual <code>Nominal Subtyping</code>.</p>
 <p><em><strong>Wojak:</strong> that just adds to the confusion. what&rsquo;s <code>Structural</code> and <code>Nominal</code> subtyping now?</em></p>
 <p><strong>Teapot:</strong> In <code>Structural Subtyping</code>, if type A can handle all the messages as type B, i.e., both type A and type B implement the same set of methods, type A can said to be a subtype of type B, <strong>regardless</strong> of the fact whether type A inherits type B or not. C++ template functions(also <strong>Concepts</strong>) and <strong>Golang interfaces</strong> behave like this.</p>
