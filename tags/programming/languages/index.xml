@@ -5,16 +5,14 @@
     <link>https://glados-418.github.io/tags/programming/languages/</link>
     <description>Recent content in programming/languages on smirking teapot</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://glados-418.github.io/tags/programming/languages/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <atom:link href="https://glados-418.github.io/tags/programming/languages/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Negative Integers are NOT Literals</title>
       <link>https://glados-418.github.io/posts/negative-integer-literals/</link>
       <pubDate>Wed, 14 Jun 2023 17:18:54 +0530</pubDate>
-      
       <guid>https://glados-418.github.io/posts/negative-integer-literals/</guid>
-      <description>TL;DR: Write your negative numbers in base-10 and, wrap them in parentheses.
-An unusual behaviour There are, generally, two ways to represent a negative integer literal:</description>
+      <description>TL;DR: Write your negative numbers in base-10 and, wrap them in parentheses.&#xA;An unusual behaviour There are, generally, two ways to represent a negative integer literal:</description>
     </item>
-    
   </channel>
 </rss>
