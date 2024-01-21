@@ -6,16 +6,14 @@
     <description>Recent content in programming-languages on smirking teapot</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 14 Jun 2023 17:18:54 +0530</lastBuildDate><atom:link href="https://glados-418.github.io/tags/programming-languages/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 14 Jun 2023 17:18:54 +0530</lastBuildDate>
+    <atom:link href="https://glados-418.github.io/tags/programming-languages/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Negative Integer Literals</title>
-      <link>https://glados-418.github.io/posts/negative-integer-literals/</link>
+      <title>Understanding Negative Integer Literals</title>
+      <link>https://glados-418.github.io/posts/understanding-negative-integer-literals/</link>
       <pubDate>Wed, 14 Jun 2023 17:18:54 +0530</pubDate>
-      
-      <guid>https://glados-418.github.io/posts/negative-integer-literals/</guid>
-      <description>TL;DR: Write your negative numbers in base-10, use consistent &amp;amp; fixed width integer types and wrap them in parentheses.
- negative numbers are represented in two&amp;rsquo;s complement form and, type promotion of a 32-bit integer to 64-bit integer preserves the value.</description>
+      <guid>https://glados-418.github.io/posts/understanding-negative-integer-literals/</guid>
+      <description>TL;DR: Write your negative numbers in base-10 and, wrap them in parentheses.&#xA;An unusual behaviour There are, generally, two ways to represent a negative integer literal:</description>
     </item>
-    
   </channel>
 </rss>

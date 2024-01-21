@@ -23,10 +23,10 @@
       <description>The worst-case analysis gives a theoretical upper bound on the algorithmic performance. It&amp;rsquo;s important but, it has its limitations. So, there are other kinds of analyses to fill those gaps.</description>
     </item>
     <item>
-      <title>Negative Integers are NOT Literals</title>
-      <link>https://glados-418.github.io/posts/negative-integer-literals/</link>
+      <title>Understanding Negative Integer Literals</title>
+      <link>https://glados-418.github.io/posts/understanding-negative-integer-literals/</link>
       <pubDate>Wed, 14 Jun 2023 17:18:54 +0530</pubDate>
-      <guid>https://glados-418.github.io/posts/negative-integer-literals/</guid>
+      <guid>https://glados-418.github.io/posts/understanding-negative-integer-literals/</guid>
       <description>TL;DR: Write your negative numbers in base-10 and, wrap them in parentheses.&#xA;An unusual behaviour There are, generally, two ways to represent a negative integer literal:</description>
     </item>
   </channel>

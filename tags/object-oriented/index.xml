@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>object-oriented on smirking teapot</title>
+    <link>https://glados-418.github.io/tags/object-oriented/</link>
+    <description>Recent content in object-oriented on smirking teapot</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 21 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://glados-418.github.io/tags/object-oriented/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Filling the Gaps With Visitor Pattern</title>
+      <link>https://glados-418.github.io/posts/filling-the-gaps-with-visitor-pattern/</link>
+      <pubDate>Sun, 21 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://glados-418.github.io/posts/filling-the-gaps-with-visitor-pattern/</guid>
+      <description>Design patterns can be confusing. Sometimes the implementations are similar, other times the line between their intent becomes unclear. I try to make sense of some of the closely related Object-Oriented Behavioural Patterns in this post by attempting to define a Visitor and compare it with other patterns &amp;ndash; Strategy, Command and Type Erasure Idiom in C++(not same as void* in C or Type Erasure in Java).</description>
+    </item>
+  </channel>
+</rss>

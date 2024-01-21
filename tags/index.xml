@@ -6,33 +6,34 @@
     <description>Recent content in Tags on smirking teapot</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Sun, 21 Jan 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://glados-418.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>programming/algorithms</title>
-      <link>https://glados-418.github.io/tags/programming/algorithms/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://glados-418.github.io/tags/programming/algorithms/</guid>
+      <title>object-oriented</title>
+      <link>https://glados-418.github.io/tags/object-oriented/</link>
+      <pubDate>Sun, 21 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://glados-418.github.io/tags/object-oriented/</guid>
       <description></description>
     </item>
     <item>
-      <title>programming/design</title>
-      <link>https://glados-418.github.io/tags/programming/design/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://glados-418.github.io/tags/programming/design/</guid>
+      <title>software-design</title>
+      <link>https://glados-418.github.io/tags/software-design/</link>
+      <pubDate>Sun, 21 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>https://glados-418.github.io/tags/software-design/</guid>
       <description></description>
     </item>
     <item>
-      <title>programming/languages</title>
-      <link>https://glados-418.github.io/tags/programming/languages/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://glados-418.github.io/tags/programming/languages/</guid>
+      <title>algorithms</title>
+      <link>https://glados-418.github.io/tags/algorithms/</link>
+      <pubDate>Sun, 10 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>https://glados-418.github.io/tags/algorithms/</guid>
       <description></description>
     </item>
     <item>
-      <title>programming/oop</title>
-      <link>https://glados-418.github.io/tags/programming/oop/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://glados-418.github.io/tags/programming/oop/</guid>
+      <title>programming-languages</title>
+      <link>https://glados-418.github.io/tags/programming-languages/</link>
+      <pubDate>Wed, 14 Jun 2023 17:18:54 +0530</pubDate>
+      <guid>https://glados-418.github.io/tags/programming-languages/</guid>
       <description></description>
     </item>
   </channel>

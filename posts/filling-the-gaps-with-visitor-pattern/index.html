@@ -72,16 +72,23 @@
 
     <div class="markdown">
       <p>Design patterns can be confusing. Sometimes the implementations are similar, other times the line between their intent becomes unclear. I try to make sense of some of the closely related <strong>Object-Oriented Behavioural Patterns</strong> in this post by attempting to define a <code>Visitor</code> and compare it with other patterns &ndash; <code>Strategy</code>, <code>Command</code> and <code>Type Erasure</code> Idiom in C++(<a href="https://akrzemi1.wordpress.com/2013/11/18/type-erasure-part-i/">not same as void* in C or Type Erasure in Java</a>).</p>
+
+
+
 <h2 id="outline">Outline</h2>
-<ul>
-<li><a href="#attempt-#1---(vs-strategy)">Attempt #1 - (vs Strategy)</a></li>
-<li><a href="#attempt-#2---(vs-command)">Attempt #2 - (vs Command)</a></li>
-<li><a href="#attempt-#3---(vs-type-erasure)">Attempt #3 - (vs Type Erasure)</a></li>
-<li><a href="#attempt-#4---(and-alternatives)">Attempt #4 - (and alternatives)</a></li>
-<li><a href="#comparison-matrix">Comparison Matrix</a></li>
-<li><a href="#references">References</a></li>
-</ul>
-<h2 id="attempt-1---vs-strategy">Attempt #1 - (vs Strategy)</h2>
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#attempt-1">Attempt #1 - (vs Strategy)</a></li>
+    <li><a href="#attempt-2">Attempt #2 - (vs Command)</a></li>
+    <li><a href="#attempt-3">Attempt #3 - (vs Type Erasure)</a></li>
+    <li><a href="#attempt-4">Attempt #4 - (and alternatives)</a></li>
+    <li><a href="#comparison-matrix">Comparison Matrix</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+
+<h2 id="attempt-1">Attempt #1 - (vs Strategy)</h2>
 <blockquote>
 <p><code>Visitor</code> lets you decouple behaviour from the type.</p>
 </blockquote>
@@ -95,7 +102,7 @@
 <blockquote>
 <p><code>Strategy</code> allows decoupling multiple implementations of a known behaviour from a type.</p>
 </blockquote>
-<h2 id="attempt-2---vs-command">Attempt #2 - (vs Command)</h2>
+<h2 id="attempt-2">Attempt #2 - (vs Command)</h2>
 <blockquote>
 <p><code>Visitor</code> allows decoupling of new behaviours from a type, without modifying the type itself.</p>
 </blockquote>
@@ -110,7 +117,7 @@
 <blockquote>
 <p><code>Command</code> decouples invoker of an action and the receiver of it by encapsulating the receiver within the action itself.</p>
 </blockquote>
-<h2 id="attempt-3---vs-type-erasure">Attempt #3 - (vs Type Erasure)</h2>
+<h2 id="attempt-3">Attempt #3 - (vs Type Erasure)</h2>
 <blockquote>
 <p><code>Visitor</code> allows decoupling of new behaviours from a set of similar(polymorphic) types, without modifying the type itself.</p>
 </blockquote>
@@ -175,13 +182,13 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h2 id="attempt-4---and-alternatives">Attempt #4 - (and alternatives)</h2>
+</span></span></code></pre></div><h2 id="attempt-4">Attempt #4 - (and alternatives)</h2>
 <blockquote>
 <p><code>Visitor</code> lets you add new(unknown) behaviors to a closed set of nominal subtypes without modifying the type.</p>
 </blockquote>
 <p><em><strong>Wojak:</strong> Visitor seems useful. How does C approach visitor like behaviour given that it is not object-oriented?</em></p>
 <p><strong>Teapot:</strong> <a href="https://blog.melard.fr/post/33389032625/how-to-implement-a-visitor-pattern-using-c">Switch Cases</a>. Also, a value-semantic way to implement <code>Visitor</code> since C++17 is the <code>std::variant + std::visit</code> combo.</p>
-<p>*<strong>Wojak:</strong> TL;DR?</p>
+<p><em><strong>Wojak:</strong> TL;DR?</em></p>
 <p><strong>Teapot:</strong> maybe this&rsquo;ll help:</p>
 <blockquote>
 <ul>
@@ -235,7 +242,7 @@
 </table>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://www.oreilly.com/library/view/c-software-design/9781098113155/">[Book] C++ Software Design - Klaus Iglberger</a> &ndash; best</li>
+<li><a href="https://www.oreilly.com/library/view/c-software-design/9781098113155/">[Book] C++ Software Design - Klaus Iglberger</a></li>
 <li><a href="https://refactoring.guru/">Refactoring and Design Patterns</a></li>
 </ul>
 
@@ -247,9 +254,9 @@
           <nav class="nav tags">
               <ul class="flat">
                 
-                <li><a href="/tags/programming/oop">programming/oop</a></li>
+                <li><a href="/tags/object-oriented">object-oriented</a></li>
                 
-                <li><a href="/tags/programming/design">programming/design</a></li>
+                <li><a href="/tags/software-design">software-design</a></li>
                 
               </ul>
           </nav>

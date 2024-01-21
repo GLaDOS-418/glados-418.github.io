@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>algorithms on smirking teapot</title>
+    <link>https://glados-418.github.io/tags/algorithms/</link>
+    <description>Recent content in algorithms on smirking teapot</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 10 Sep 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://glados-418.github.io/tags/algorithms/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Analysis of algorithms beyond the worst case</title>
+      <link>https://glados-418.github.io/posts/analysis-of-algorithms-beyond-the-worst-case/</link>
+      <pubDate>Sun, 10 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>https://glados-418.github.io/posts/analysis-of-algorithms-beyond-the-worst-case/</guid>
+      <description>The worst-case analysis gives a theoretical upper bound on the algorithmic performance. It&amp;rsquo;s important but, it has its limitations. So, there are other kinds of analyses to fill those gaps.</description>
+    </item>
+  </channel>
+</rss>
