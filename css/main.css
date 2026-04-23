@@ -1,9 +1,23 @@
+/* ==========================================================================
+   Base & Reset
+   Foundational styles: colors, fonts, selection highlight, horizontal rules.
+   Font: "Source Code Pro" (loaded via Google Fonts in header.html).
+   ========================================================================== */
+
+html {
+    background-color: #fff;
+}
+
 body {
     font-family: "Source Code Pro";
     font-weight: 400;
     color: #333;
+    background-color: #fff;
     line-height: 1.6;
     font-size: 16px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 a, a:hover {
@@ -35,6 +49,11 @@ hr {
     padding: 0;
 }
 
+/* ==========================================================================
+   Media & Form Elements
+   Images, figures, fieldsets, textareas.
+   ========================================================================== */
+
 img {
     margin: 10px auto 10px auto;
     max-width: 100%;
@@ -59,6 +78,11 @@ fieldset {
 textarea {
     resize: vertical;
 }
+
+/* ==========================================================================
+   Typography
+   Blockquotes, headings (Raleway font), links, text alignment helpers.
+   ========================================================================== */
 
 blockquote {
     margin-left: 1rem;
@@ -131,8 +155,14 @@ h6 {
     text-align: right;
 }
 
+/* ==========================================================================
+   Layout & Helpers
+   Container width, list resets, utility classes.
+   ========================================================================== */
+
 .container {
     max-width: 800px;
+    flex: 1;
 }
 
 ul {
@@ -179,22 +209,142 @@ ul {
     display: inline;
 }
 
+/* ==========================================================================
+   Code Blocks, Toolbar & Copy Button
+   .highlight wraps Chroma-generated syntax blocks. A dashed border
+   surrounds each block; a .code-toolbar strip at the top holds the copy
+   button in normal document flow (no absolute positioning).
+   Dark mode overrides live in dark.css.
+   ========================================================================== */
+
 .highlight pre {
     margin-bottom: 0;
     margin-top: 0;
     padding: 20px;
-    background-color: #312 !important;
+    border-radius: 0;  /* toolbar sits above, so no top radius needed */
 }
 
 .highlight {
     background: 0 0;
-    background-color: #FAFAFA;
+    position: relative;
+    border: 1px dashed #ddd;
+    border-radius: 6px;
+    overflow: hidden;
 }
 
 pre code {
   display: inline-block;
 }
-  
+
+/* Toolbar strip above code/mermaid content -- holds copy/image/fullscreen buttons */
+.code-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 4px 8px;
+    gap: 6px;
+    background: #f5f5f5;
+    border-bottom: 1px dashed #ddd;
+}
+
+/* Copy button -- sits inside .code-toolbar, normal flow (not absolute) */
+.copy-btn {
+    padding: 2px 10px;
+    font-size: 12px;
+    font-family: inherit;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.06);
+    color: #555;
+    transition: background 0.2s, color 0.2s;
+}
+
+.copy-btn:hover {
+    background: rgba(0, 0, 0, 0.12);
+    color: #222;
+}
+
+.copy-btn.copied {
+    color: #116329;
+    border-color: #116329;
+}
+
+/* ==========================================================================
+   Mermaid Diagrams
+   Wrapper gets the same dashed border as code blocks. Mermaid-specific
+   sizing lives in custom-mermaid.css. The hand-drawn look is configured
+   in layouts/partials/mermaid.html (look: 'handDrawn').
+   ========================================================================== */
+
+.mermaid-wrapper {
+    position: relative;
+    border: 1px dashed #ddd;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+/* Images inside post content get a dashed border */
+.markdown img {
+    border: 1px dashed #ddd;
+    border-radius: 6px;
+}
+
+/* ==========================================================================
+   Mermaid Fullscreen Overlay
+   Fixed overlay that fills the viewport. Contains a cloned SVG with
+   svg-pan-zoom for exploring large diagrams. Closed via X button or Escape.
+   ========================================================================== */
+
+.mermaid-fullscreen-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-fullscreen-content {
+    width: 90vw;
+    height: 90vh;
+}
+
+.mermaid-fullscreen-content svg {
+    width: 100%;
+    height: 100%;
+}
+
+.mermaid-fullscreen-close {
+    position: absolute;
+    top: 16px;
+    right: 24px;
+    z-index: 10000;
+    background: rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.mermaid-fullscreen-close:hover {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================================================
+   Inline Code & Font
+   Inline code (backticks in markdown) gets a light gray background.
+   Font: "IBM Plex Mono" for all code elements.
+   ========================================================================== */
+
 p code, li code, table th code, table td code {
   display: inline;
   background: #f3f3f3;
@@ -203,6 +353,13 @@ p code, li code, table th code, table td code {
 code {
   font-family: "IBM Plex Mono";
 }
+
+/* ==========================================================================
+   Site Layout & Header
+   .wrapper constrains content width. .header is sticky at the top with a
+   bottom border. Navigation items are inline with capitalize transform.
+   Dark mode toggle button sits in the nav bar.
+   ========================================================================== */
 
 .wrapper {
     max-width: 760px;
@@ -216,6 +373,11 @@ code {
 .header {
     margin-bottom: 20px;
     padding-bottom: 20px;
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 100;
+    border-bottom: 1px solid #e8e8e8;
 }
 
 .header h1,
@@ -270,6 +432,11 @@ code {
     max-height: 15px;
 }
 
+/* ==========================================================================
+   Homepage Sections & Posts
+   Recent posts/logs lists, post metadata, draft labels, view-all links.
+   ========================================================================== */
+
 .section .section-header {
     font-size: 0.75rem;
     font-weight: 600;
@@ -281,6 +448,42 @@ code {
 
 .recent-posts .posts .post {
     margin-bottom: 30px;
+}
+
+.recent-logs .posts .log-entry {
+    margin-bottom: 18px;
+}
+
+.recent-logs .posts .log-entry .description {
+    font-size: 0.9em;
+}
+
+.view-all {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: #999;
+}
+
+.view-all:hover {
+    color: #a00;
+}
+
+.dark-mode-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: #333;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
+.dark-mode-toggle svg {
+    width: 16px;
+    height: 16px;
 }
 
 .recent-posts .posts .post .meta,
@@ -317,6 +520,12 @@ code {
     background-color: #f9f2f4;
 }
 
+/* ==========================================================================
+   Tags
+   Tag pills on posts and the tag cloud on /tags/ page. Border+text in
+   brand red (#a00), with hover fill. Tag counts shown in muted gray.
+   ========================================================================== */
+
 .post-tags .tags li {
     margin-bottom: 0;
     margin-top: 20px;
@@ -345,7 +554,7 @@ code {
     color: #999;
     border-top: 1px solid #f4f4f4;
     padding: 20px 0;
-    margin-top: 40px;
+    margin-top: auto;
 }
 
 .page-title {
@@ -354,18 +563,47 @@ code {
 
 .tag-cloud {
     margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .tag-cloud a {
-    margin-right: 15px;
+    display: inline-block;
+    border: 1px solid #a00;
+    border-radius: 4px;
+    padding: 4px 10px;
+    color: #a00;
+    font-size: 0.85rem;
+    text-decoration: none;
+    line-height: 1.4;
+    margin-right: 0;
 }
+
+.tag-cloud a:hover {
+    background-color: #a00;
+    color: #fff;
+    text-decoration: none;
+}
+
+.tag-cloud .tag-count {
+    font-size: 0.75rem;
+    color: #999;
+    margin-left: 4px;
+}
+
+/* ==========================================================================
+   Pagination
+   Right-aligned prev/next navigation for paginated list pages.
+   ========================================================================== */
 
 .pagination {
     margin: 0;
     padding: 0;
-    text-align: left;
+    text-align: right;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
+    gap: 10px;
 }
 
 .pagination li {
@@ -388,6 +626,10 @@ code {
     text-align: right;
 }
 
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+
 table th {
     background-color: #f4f4f4;
 }
@@ -396,6 +638,11 @@ table th, table td {
     padding: 10px 20px;
     border: 1px solid #dddddd;
 }
+
+/* ==========================================================================
+   Responsive Breakpoints
+   Reduce font sizes and margins on screens narrower than 768px.
+   ========================================================================== */
 
 @media (max-width: 767px) {
     body {
@@ -421,4 +668,52 @@ table th, table td {
     .container {
         margin-top: 10px;
     }
+}
+
+/* ==========================================================================
+   Sticky Heading Breadcrumb Trail
+   Shows the current h2 > h3 hierarchy as the user scrolls through a post.
+   Positioned just below the sticky header. Visibility toggled by JS
+   (main.js heading-trail IIFE) -- hidden by default, shown via .visible.
+   ========================================================================== */
+
+/* Sticky heading breadcrumb trail */
+.heading-trail {
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    background-color: #fff;
+    font-family: raleway, sans-serif;
+    font-size: 0.8rem;
+    color: #666;
+    padding: 6px 0;
+    border-bottom: 1px solid #e8e8e8;
+    display: none;
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.heading-trail.visible {
+    display: block;
+}
+
+.heading-trail .trail-separator {
+    margin: 0 6px;
+    color: #ccc;
+}
+
+.heading-trail .trail-item {
+    cursor: pointer;
+    color: #666;
+    text-decoration: none;
+}
+
+.heading-trail .trail-item:hover {
+    color: #a00;
+    text-decoration: underline;
+}
+
+.heading-trail .trail-item:last-child {
+    color: #333;
+    font-weight: 600;
 }

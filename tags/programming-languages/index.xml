@@ -1,19 +1,3 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>programming-languages on smirking teapot</title>
-    <link>https://glados-418.github.io/tags/programming-languages/</link>
-    <description>Recent content in programming-languages on smirking teapot</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Wed, 14 Jun 2023 17:18:54 +0530</lastBuildDate>
-    <atom:link href="https://glados-418.github.io/tags/programming-languages/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Understanding Negative Integer Literals</title>
-      <link>https://glados-418.github.io/posts/understanding-negative-integer-literals/</link>
-      <pubDate>Wed, 14 Jun 2023 17:18:54 +0530</pubDate>
-      <guid>https://glados-418.github.io/posts/understanding-negative-integer-literals/</guid>
-      <description>TL;DR: Write your negative numbers in base-10 and, wrap them in parentheses.&#xA;An unusual behaviour There are, generally, two ways to represent a negative integer literal:</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Programming-Languages on smirking teapot</title><link>https://glados-418.github.io/tags/programming-languages/</link><description>Recent content in Programming-Languages on smirking teapot</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Wed, 14 Jun 2023 17:18:54 +0530</lastBuildDate><atom:link href="https://glados-418.github.io/tags/programming-languages/index.xml" rel="self" type="application/rss+xml"/><item><title>Understanding Negative Integer Literals</title><link>https://glados-418.github.io/posts/understanding-negative-integer-literals/</link><pubDate>Wed, 14 Jun 2023 17:18:54 +0530</pubDate><guid>https://glados-418.github.io/posts/understanding-negative-integer-literals/</guid><description>&lt;p&gt;&lt;em&gt;&lt;strong&gt;TL;DR: Write your negative numbers in base-10 and, wrap them in parentheses.&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="an-unusual-behaviour"&gt;An unusual behaviour&lt;/h2&gt;
+&lt;p&gt;There are, generally, two ways to represent a negative integer literal:&lt;/p&gt;</description></item></channel></rss>

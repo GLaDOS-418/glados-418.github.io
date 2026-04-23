@@ -1,33 +1,3 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>smirking teapot</title>
-    <link>https://glados-418.github.io/</link>
-    <description>Recent content on smirking teapot</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jan 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://glados-418.github.io/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Filling the Gaps With Visitor Pattern</title>
-      <link>https://glados-418.github.io/posts/filling-the-gaps-with-visitor-pattern/</link>
-      <pubDate>Sun, 21 Jan 2024 00:00:00 +0000</pubDate>
-      <guid>https://glados-418.github.io/posts/filling-the-gaps-with-visitor-pattern/</guid>
-      <description>Design patterns can be confusing. Sometimes the implementations are similar, other times the line between their intent becomes unclear. I try to make sense of some of the closely related Object-Oriented Behavioural Patterns in this post by attempting to define a Visitor and compare it with other patterns &amp;ndash; Strategy, Command and Type Erasure Idiom in C++(not same as void* in C or Type Erasure in Java).</description>
-    </item>
-    <item>
-      <title>Analysis of algorithms beyond the worst case</title>
-      <link>https://glados-418.github.io/posts/analysis-of-algorithms-beyond-the-worst-case/</link>
-      <pubDate>Sun, 10 Sep 2023 00:00:00 +0000</pubDate>
-      <guid>https://glados-418.github.io/posts/analysis-of-algorithms-beyond-the-worst-case/</guid>
-      <description>The worst-case analysis gives a theoretical upper bound on the algorithmic performance. It&amp;rsquo;s important but, it has its limitations. So, there are other kinds of analyses to fill those gaps.</description>
-    </item>
-    <item>
-      <title>Understanding Negative Integer Literals</title>
-      <link>https://glados-418.github.io/posts/understanding-negative-integer-literals/</link>
-      <pubDate>Wed, 14 Jun 2023 17:18:54 +0530</pubDate>
-      <guid>https://glados-418.github.io/posts/understanding-negative-integer-literals/</guid>
-      <description>TL;DR: Write your negative numbers in base-10 and, wrap them in parentheses.&#xA;An unusual behaviour There are, generally, two ways to represent a negative integer literal:</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>smirking teapot</title><link>https://glados-418.github.io/</link><description>Recent content on smirking teapot</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Thu, 23 Apr 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://glados-418.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>std::unreachable in C++23</title><link>https://glados-418.github.io/logs/std-unreachable-cpp23/</link><pubDate>Thu, 23 Apr 2026 00:00:00 +0000</pubDate><guid>https://glados-418.github.io/logs/std-unreachable-cpp23/</guid><description>&lt;p&gt;C++23 introduced &lt;code&gt;std::unreachable()&lt;/code&gt; (defined in &lt;code&gt;&amp;lt;utility&amp;gt;&lt;/code&gt;) to explicitly mark code paths that should never execute. Before this, we relied on compiler-specific builtins like &lt;code&gt;__builtin_unreachable()&lt;/code&gt; (GCC/Clang) or &lt;code&gt;__assume(false)&lt;/code&gt; (MSVC).&lt;/p&gt;</description></item><item><title>Filling the Gaps With Visitor Pattern</title><link>https://glados-418.github.io/posts/filling-the-gaps-with-visitor-pattern/</link><pubDate>Sun, 21 Jan 2024 00:00:00 +0000</pubDate><guid>https://glados-418.github.io/posts/filling-the-gaps-with-visitor-pattern/</guid><description>&lt;p&gt;Design patterns can be confusing. Sometimes the implementations are similar, other times the line between their intent becomes unclear. I try to make sense of some of the closely related &lt;strong&gt;Object-Oriented Behavioural Patterns&lt;/strong&gt; in this post by attempting to define a &lt;code&gt;Visitor&lt;/code&gt; and compare it with other patterns &amp;ndash; &lt;code&gt;Strategy&lt;/code&gt;, &lt;code&gt;Command&lt;/code&gt; and &lt;code&gt;Type Erasure&lt;/code&gt; Idiom in C++(&lt;a href="https://akrzemi1.wordpress.com/2013/11/18/type-erasure-part-i/"&gt;not same as void* in C or Type Erasure in Java&lt;/a&gt;).&lt;/p&gt;</description></item><item><title>Analysis of algorithms beyond the worst case</title><link>https://glados-418.github.io/posts/analysis-of-algorithms-beyond-the-worst-case/</link><pubDate>Sun, 10 Sep 2023 00:00:00 +0000</pubDate><guid>https://glados-418.github.io/posts/analysis-of-algorithms-beyond-the-worst-case/</guid><description>&lt;p&gt;The &lt;code&gt;worst-case&lt;/code&gt; analysis gives a theoretical &lt;code&gt;upper bound&lt;/code&gt; on the algorithmic performance. It&amp;rsquo;s important but, it has its limitations. So, there are other kinds of analyses to fill those gaps.&lt;/p&gt;</description></item><item><title>Understanding Negative Integer Literals</title><link>https://glados-418.github.io/posts/understanding-negative-integer-literals/</link><pubDate>Wed, 14 Jun 2023 17:18:54 +0530</pubDate><guid>https://glados-418.github.io/posts/understanding-negative-integer-literals/</guid><description>&lt;p&gt;&lt;em&gt;&lt;strong&gt;TL;DR: Write your negative numbers in base-10 and, wrap them in parentheses.&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id="an-unusual-behaviour"&gt;An unusual behaviour&lt;/h2&gt;
+&lt;p&gt;There are, generally, two ways to represent a negative integer literal:&lt;/p&gt;</description></item></channel></rss>

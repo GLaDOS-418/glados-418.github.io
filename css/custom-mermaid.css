@@ -1,7 +1,20 @@
+/* ==========================================================================
+   Mermaid Diagram Overrides
+   
+   Background is theme-aware: light mode gets white, dark mode gets dark
+   (set via dark.css). This allows the mermaid dark theme to render properly
+   instead of forcing white on all diagrams.
+   
+   Rendered SVGs get a fixed height + full width for consistent sizing
+   inside the .mermaid-wrapper container. svg-pan-zoom (loaded in
+   mermaid.html) handles zoom/pan within this fixed viewport.
+   ========================================================================== */
+
 .mermaid {
-  background-color: #fff  /* diagram maybe invisible if left to theme background */
+  background-color: #fff;
 }
 
+/* Match rendered SVG elements by their id prefix (set by Mermaid runtime) */
 [id^="mermaid-rendered-svg"]{
   height: 400px;
   width: 100%;
